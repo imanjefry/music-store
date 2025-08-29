@@ -1,0 +1,5 @@
+{
+  "name": "React Music Store",
+  "description": "A modern, visually appealing music store web application built with React, TypeScript, and Tailwind CSS. It features sections for new releases, featured albums, and genre browsing, designed to provide a premium user experience.",
+  "requestFramePermissions": []
+}
