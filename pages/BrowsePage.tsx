@@ -60,7 +60,7 @@ const BrowsePage: React.FC<BrowsePageProps> = ({
         <div>
           <h2 className="text-3xl font-bold mb-6 text-white">Artists</h2>
           {filteredSingers.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 items-start">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-4 md:gap-6 items-start">
               {filteredSingers.map(singer => (
                 <SingerCard
                   key={singer.id}

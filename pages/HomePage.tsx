@@ -20,6 +20,8 @@ interface HomePageProps {
   onToggleAlbumFavorite: (id: number) => void;
   onToggleSingerFavorite: (id: number) => void;
   onAlbumClick: (album: Album) => void;
+  onOpenAddAlbumModal: () => void;
+  onOpenAddSingerModal: () => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({
@@ -34,6 +36,8 @@ const HomePage: React.FC<HomePageProps> = ({
   onToggleAlbumFavorite,
   onToggleSingerFavorite,
   onAlbumClick,
+  onOpenAddAlbumModal,
+  onOpenAddSingerModal,
 }) => {
   const showSearchResults = searchQuery.trim().length > 0;
 
@@ -76,6 +80,7 @@ const HomePage: React.FC<HomePageProps> = ({
               favoriteIds={favoriteAlbumIds}
               onToggleFavorite={onToggleAlbumFavorite}
               onAlbumClick={onAlbumClick}
+              onAdd={onOpenAddAlbumModal}
             />
             <NewReleases 
               searchQuery={searchQuery} 
@@ -83,12 +88,14 @@ const HomePage: React.FC<HomePageProps> = ({
               favoriteIds={favoriteAlbumIds}
               onToggleFavorite={onToggleAlbumFavorite}
               onAlbumClick={onAlbumClick}
+              onAdd={onOpenAddAlbumModal}
             />
             <SingersSection
               searchQuery={searchQuery}
               singers={singers}
               favoriteIds={favoriteSingerIds}
               onToggleFavorite={onToggleSingerFavorite}
+              onAdd={onOpenAddSingerModal}
             />
             <GenreBrowser />
           </>

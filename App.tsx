@@ -10,6 +10,8 @@ import ContactPage from './pages/ContactPage';
 import AlbumDetailsModal from './components/AlbumDetailsModal';
 import MusicPlayer from './components/MusicPlayer';
 import LoadingSpinner from './components/LoadingSpinner';
+import AddAlbumModal from './components/AddAlbumModal';
+import AddSingerModal from './components/AddSingerModal';
 
 // Custom hook for debouncing input
 const useDebounce = (value: string, delay: number) => {
@@ -46,6 +48,9 @@ const App: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<Song | null>(null);
   const [currentPlaylist, setCurrentPlaylist] = useState<{album: Album, songs: Song[]}>({ album: {} as Album, songs: [] });
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const [isAddAlbumModalOpen, setIsAddAlbumModalOpen] = useState(false);
+  const [isAddSingerModalOpen, setIsAddSingerModalOpen] = useState(false);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
@@ -86,7 +91,8 @@ const App: React.FC = () => {
         setIsLoading(true);
         const { albums } = await api.searchMusic(debouncedSearchQuery);
         setSearchResults(albums);
-      } catch (err) {
+      } catch (err)
+ {
         setError('Failed to perform search.');
       } finally {
         setIsLoading(false);
@@ -166,6 +172,22 @@ const App: React.FC = () => {
     setIsPlaying(false);
   };
 
+  const handleAddAlbum = (album: Omit<Album, 'id'>, type: 'featured' | 'new') => {
+    const newAlbum = { ...album, id: Date.now(), songs: [] };
+    if (type === 'featured') {
+      setFeaturedAlbums(prev => [newAlbum, ...prev]);
+    } else {
+      setNewReleases(prev => [newAlbum, ...prev]);
+    }
+    setIsAddAlbumModalOpen(false);
+  };
+
+  const handleAddSinger = (singer: Omit<Singer, 'id'>) => {
+    const newSinger = { ...singer, id: Date.now() };
+    setSingers(prev => [newSinger, ...prev]);
+    setIsAddSingerModalOpen(false);
+  };
+
   const renderPage = () => {
     if (error) {
       return <div className="container mx-auto text-center py-20 text-red-400">{error}</div>;
@@ -186,6 +208,8 @@ const App: React.FC = () => {
             onToggleAlbumFavorite={handleToggleAlbumFavorite}
             onToggleSingerFavorite={handleToggleSingerFavorite}
             onAlbumClick={handleAlbumClick}
+            onOpenAddAlbumModal={() => setIsAddAlbumModalOpen(true)}
+            onOpenAddSingerModal={() => setIsAddSingerModalOpen(true)}
           />
         );
       case 'browse':
@@ -230,6 +254,16 @@ const App: React.FC = () => {
           onPlayTrack={handlePlayTrack}
         />
       )}
+      <AddAlbumModal
+        isOpen={isAddAlbumModalOpen}
+        onClose={() => setIsAddAlbumModalOpen(false)}
+        onAddAlbum={handleAddAlbum}
+      />
+      <AddSingerModal
+        isOpen={isAddSingerModalOpen}
+        onClose={() => setIsAddSingerModalOpen(false)}
+        onAddSinger={handleAddSinger}
+      />
       {currentTrack && currentPlaylist.album && (
         <MusicPlayer
           track={currentTrack}

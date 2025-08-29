@@ -16,9 +16,6 @@ export interface Album {
 export interface Singer {
   id: number;
   name: string;
-  // FIX: Add optional 'imageUrl' to the Singer type to resolve type errors.
-  // This property is used in 'constants.ts' and 'AddSingerModal.tsx' but was missing from the interface.
-  // It's optional because not all Singer objects in the app have an imageUrl.
   imageUrl?: string;
 }
 
