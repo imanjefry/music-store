@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Album, Singer } from '../types';
 import AlbumCard from '../components/AlbumCard';
@@ -12,6 +11,7 @@ interface BrowsePageProps {
   favoriteSingerIds: Set<number>;
   onToggleAlbumFavorite: (id: number) => void;
   onToggleSingerFavorite: (id: number) => void;
+  onAlbumClick: (album: Album) => void;
 }
 
 const BrowsePage: React.FC<BrowsePageProps> = ({
@@ -22,6 +22,7 @@ const BrowsePage: React.FC<BrowsePageProps> = ({
   favoriteSingerIds,
   onToggleAlbumFavorite,
   onToggleSingerFavorite,
+  onAlbumClick,
 }) => {
   const filteredAlbums = albums.filter(album =>
     album.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -47,7 +48,7 @@ const BrowsePage: React.FC<BrowsePageProps> = ({
                   album={album} 
                   isFavorite={favoriteAlbumIds.has(album.id)}
                   onToggleFavorite={onToggleAlbumFavorite}
-                  onClick={() => console.log('Album Details:', album)}
+                  onClick={() => onAlbumClick(album)}
                 />
               ))}
             </div>

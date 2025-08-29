@@ -7,9 +7,10 @@ interface NewReleasesProps {
   albums: Album[];
   favoriteIds: Set<number>;
   onToggleFavorite: (id: number) => void;
+  onAlbumClick: (album: Album) => void;
 }
 
-const NewReleases: React.FC<NewReleasesProps> = ({ searchQuery, albums, favoriteIds, onToggleFavorite }) => {
+const NewReleases: React.FC<NewReleasesProps> = ({ searchQuery, albums, favoriteIds, onToggleFavorite, onAlbumClick }) => {
   const filteredAlbums = albums.filter(album =>
     album.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     album.artist.toLowerCase().includes(searchQuery.toLowerCase())
@@ -26,7 +27,7 @@ const NewReleases: React.FC<NewReleasesProps> = ({ searchQuery, albums, favorite
               album={album}
               isFavorite={favoriteIds.has(album.id)}
               onToggleFavorite={onToggleFavorite}
-              onClick={() => console.log('Album Details:', album)}
+              onClick={() => onAlbumClick(album)}
             />
           ))}
         </div>

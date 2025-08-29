@@ -7,9 +7,10 @@ interface FeaturedAlbumsProps {
   albums: Album[];
   favoriteIds: Set<number>;
   onToggleFavorite: (id: number) => void;
+  onAlbumClick: (album: Album) => void;
 }
 
-const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({ searchQuery, albums, favoriteIds, onToggleFavorite }) => {
+const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({ searchQuery, albums, favoriteIds, onToggleFavorite, onAlbumClick }) => {
   const filteredAlbums = albums.filter(album =>
     album.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     album.artist.toLowerCase().includes(searchQuery.toLowerCase())
@@ -26,7 +27,7 @@ const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({ searchQuery, albums, fa
               album={album} 
               isFavorite={favoriteIds.has(album.id)}
               onToggleFavorite={onToggleFavorite}
-              onClick={() => console.log('Album Details:', album)}
+              onClick={() => onAlbumClick(album)}
             />
           ))}
         </div>

@@ -1,13 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import SearchIcon from './icons/SearchIcon';
-import PlusIcon from './icons/PlusIcon';
 import { Page } from '../types';
 
 interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  onAddAlbumClick: () => void;
   currentPage: Page;
   onNavigate: (page: Page) => void;
 }
@@ -30,7 +28,7 @@ const NavLink: React.FC<{
   );
 };
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, onAddAlbumClick, currentPage, onNavigate }) => {
+const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, currentPage, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -70,14 +68,6 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, onSearchChange, onAddAlbum
                 <SearchIcon className="h-5 w-5 text-gray-400" />
               </div>
             </div>
-            <button
-              onClick={onAddAlbumClick}
-              className="flex-shrink-0 flex items-center gap-2 bg-gray-800 hover:bg-purple-600 border border-gray-700 hover:border-purple-600 text-white font-medium py-2 px-4 rounded-full transition-all duration-300"
-              aria-label="Add new music"
-            >
-              <PlusIcon className="h-5 w-5" />
-              <span className="hidden sm:inline">Add Music</span>
-            </button>
           </div>
         </div>
       </div>
